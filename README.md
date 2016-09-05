@@ -1,9 +1,11 @@
 # Leaflet.track
 车辆轨迹
-##使用 Zrender 绘制轨迹   https://github.com/ecomfe/zrender
 
+ 1. 下载Zrender: https://github.com/ecomfe/zrender,  放到目录 apache-tomcat-7.0.61\webapps\zrender
+ 2. 下载Leaflet.track， 放到目录 apache-tomcat-7.0.61\webapps\Leaflet.track
 
-/src/simpleTrack.js  line74：
+2. 或者修改配置 : /src/simpleTrack.js  line74
+```javascript
 Zrender配置
         require.config({
             packages: [{
@@ -12,3 +14,6 @@ Zrender配置
                 main: 'zrender'
             }]
         });
+```
+
+###启动tomcat打开demo页面：http://localhost:8080/Leaflet.track/demo/index.html

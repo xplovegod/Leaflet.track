@@ -71,7 +71,7 @@ simpletrack.prototype = {
         var points = this._data;
         var canvs = this._canvas;
 
-        zrRequire.config({
+        require.config({ 
             packages: [{
                 name: 'zrender',
                 location: '../../zrender/src',
@@ -79,7 +79,7 @@ simpletrack.prototype = {
             }]
         });
 
-        zrRequire(
+        require( 
             [
                 "zrender",
                 "zrender/graphic/shape/Polyline",

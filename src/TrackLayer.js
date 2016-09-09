@@ -104,7 +104,6 @@ L.TrackLayer = (L.Layer ? L.Layer : L.Class).extend({
     },
 
     _reset: function() {
-        debugger;
         var topLeft = this._map.containerPointToLayerPoint([0, 0]);
         L.DomUtil.setPosition(this._canvas, topLeft);
 

@@ -14,6 +14,8 @@ function simpletrack(canvas) {
     this._data = [];
 
     this.zr = null;
+
+    this._animationPointIndex = 1;
 }
 
 simpletrack.prototype = {
@@ -71,15 +73,15 @@ simpletrack.prototype = {
         var points = this._data;
         var canvs = this._canvas;
 
-        require.config({ 
+        require.config({
             packages: [{
                 name: 'zrender',
-                location: '../../zrender/src',
+                location: '../../zrender-master/src',
                 main: 'zrender'
             }]
         });
 
-        require( 
+        require(
             [
                 "zrender",
                 "zrender/graphic/shape/Polyline",
@@ -90,7 +92,8 @@ simpletrack.prototype = {
             ],
             function(zrender, PolylineShape, LineShape, PolygonShape, StarShape, ImageShape) {
 
-                var carAnimator = function(points, i) {
+                var carAnimator = function(points) {
+                    var i = moduleThis._animationPointIndex;
                     var ang = moduleThis.azimuthAngle(points[i - 1][0], points[i - 1][1], points[i][0], points[i][1]);
 
                     var star = new ImageShape({
@@ -112,18 +115,22 @@ simpletrack.prototype = {
 
 
                     star.animate("", false)
-                        .when(4000, {
+                        .when(2000, {
                             position: points[i]
                         })
                         .done(function() {
+                            console.log(moduleThis._animationPointIndex);
                             star.stopAnimation();
 
-                            i++;
-                            if (i <= points.length - 1) {
-                                carAnimator(points, i);
-                            }
-                            if (i < points.length) {
+                            moduleThis.zr.clearAnimation();
+
+                            moduleThis._animationPointIndex++;
+
+                            if (moduleThis._animationPointIndex <= points.length - 1) {
                                 moduleThis.zr.remove(star);
+                                carAnimator(points);
+                            } else {
+                                moduleThis._animationPointIndex = 1;
                             }
                         })
                         .start();
@@ -180,7 +187,7 @@ simpletrack.prototype = {
                     moduleThis.zr.add(polygon);
                 }
 
-                carAnimator(points, 1);
+                carAnimator(points);
 
                 moduleThis.zr.configLayer(1, {
                     motionBlur: true,

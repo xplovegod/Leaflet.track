@@ -26,6 +26,14 @@
 
 <script>
 
+        require.config({
+            packages: [{
+                name: 'zrender',
+                location: '../../zrender/src',
+                main: 'zrender'
+            }]
+        });
+
     var map = L.map('map').setView([31.79035, 119.93843], 10);
 
     var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
